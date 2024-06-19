@@ -84,4 +84,38 @@ const deleteUserListing = asyncHandler(async (req, res) => {
    res.status(200).json(new ApiResponse(true, "Listing deleted successfully"));
 });
 
-export { createListing, showUserListing, deleteUserListing };
+const getUserListing = asyncHandler(async (req, res) => {
+   if (!req.params.id) throw new ApiError(402, "No id provided");
+   console.log(req.params.id);
+   const listing = await Listing.findById(req.params.id);
+   if (!listing) {
+      throw new ApiError(404, "Listing not found");
+   }
+   res.status(200).json(new ApiResponse(true, "Listing Found", listing));
+});
+
+const updateListing = asyncHandler(async (req, res) => {
+   if (!req.params.id) throw new ApiError(402, "No id provided");
+   if (!req.body) throw new ApiError(400, "No data provided");
+   if (!req.files && !req.files.images) throw new ApiError(400, "No image");
+
+   const { images } = req.files;
+   const imageRes = await uploadOnCloudinary(images?.path);
+   const newDict = {
+      ...req.body,
+      imageUrls: imageRes?.url,
+   };
+   const listing = await Listing.findByIdAndUpdate(req.params.id, newDict, {
+      new: true,
+   });
+   return res
+      .status(200)
+      .json(new ApiResponse(true, "Listing updated", listing));
+});
+export {
+   createListing,
+   showUserListing,
+   deleteUserListing,
+   getUserListing,
+   updateListing,
+};

@@ -57,18 +57,17 @@ function Header() {
          return;
       }
    };
+   const registerRoute = () => {
+      navigate("/register");
+   };
    const signOut = async () => {
       try {
-         await axios
-            .post(
-               `http://localhost:4000/api/v1/users/logout`,
-               {},
-               { withCredentials: true }
-            )
-            .then(() => {
-               dispatch(deleteUserSuccess());
-               navigate("/");
-            });
+         // .post(`http://localhost:4000/api/v1/users/logout`)
+         await axios.post("/v1/users/logout").then(() => {
+            dispatch(deleteUserSuccess());
+            localStorage.removeItem("persist:root");
+            navigate("/");
+         });
       } catch (error) {
          return;
       }
@@ -129,7 +128,7 @@ function Header() {
                         />
                      </svg>
                      <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                        Are you sure you want to delete this product?
+                        Are you sure you want to delete this account?
                      </h3>
                      <button
                         onClick={deleteProfile}
@@ -208,6 +207,7 @@ function Header() {
                      ) : (
                         <button
                            type="button"
+                           onClick={registerRoute}
                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         >
                            SignUp

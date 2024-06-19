@@ -9,6 +9,7 @@ import Header from "./Components/Header";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import About from "./Pages/About";
 import CreateListing from "./Pages/CreateListing";
+import UpdateListing from "./Pages/UpdateListing";
 import Testing from "./Pages/Testing";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
                {/* <Route element=() */}
                <Route path="/profile" element={<Profile />} />
                <Route path="/createListing" element={<CreateListing />} />
+               <Route path="/updateListing/:id" element={<UpdateListing />} />
             </Route>
          </Routes>
       </BrowserRouter>

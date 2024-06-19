@@ -46,6 +46,7 @@ function Profile() {
          setShowListingError(true);
       }
    };
+
    const handleImageChange = async () => {
       // console.log(avatar);
       formDataImage.append("avatar", avatar);
@@ -272,12 +273,14 @@ function Profile() {
                                  {listing.discountPrice}
                               </div> */}
                               <div class=" mx-2inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                 <button
-                                    onClick={() => editListing(listing._id)}
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                 >
-                                    Edit
-                                 </button>
+                                 <Link to={`/updateListing/${listing._id}`}>
+                                    <button
+                                       onClick={() => editListing(listing._id)}
+                                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                    >
+                                       Edit
+                                    </button>
+                                 </Link>
                               </div>
                               <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
                                  <button
