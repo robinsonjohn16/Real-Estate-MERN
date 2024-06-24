@@ -26,16 +26,19 @@ function UpdateListing() {
    useEffect(() => {
       const fetchingData = async () => {
          const listingId = params.id;
-         console.log(listingId);
+         console.log("Listing ID", listingId);
          await axios
-            .get(`/v1/get/${listingId}`, {
+            .get(`/v1/listing/get/${listingId}`, {
                withCredentials: true,
             })
             .then((data) => {
-               console.log(data.data);
-               // setFormData(data.data.data);
+               console.log("Data ", data.data.message);
+               setFormData(data.data.message);
             })
-            .catch();
+            .catch()
+            .finally(() => {
+               console.log("Form Data ", formData);
+            });
       };
       fetchingData();
    }, []);
@@ -190,6 +193,7 @@ function UpdateListing() {
                            <input
                               id="parking"
                               type="checkbox"
+                              checked={formData.parking}
                               onChange={(e) => {
                                  setFormData({
                                     ...formData,
@@ -209,7 +213,7 @@ function UpdateListing() {
                            <input
                               id="furnished"
                               type="checkbox"
-                              value=""
+                              checked={formData.furnished}
                               onChange={(e) => {
                                  setFormData({
                                     ...formData,
@@ -229,6 +233,7 @@ function UpdateListing() {
                            <input
                               id="offer"
                               type="checkbox"
+                              checked={formData.offer}
                               onChange={(e) => {
                                  setFormData({
                                     ...formData,
@@ -245,38 +250,6 @@ function UpdateListing() {
                            </label>
                         </div>
                      </div>
-                     {/* <div>
-                        <label
-                           for="offer"
-                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                           Offer
-                        </label>
-                        <select
-                           id="offer"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        >
-                           <option selected="">Is it an offer</option>
-                           <option value="yes">Yes</option>
-                           <option value="no">No</option>
-                        </select>
-                     </div> */}
-                     {/* <div>
-                        <label
-                           for="offer"
-                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                           Offer
-                        </label>
-                        <input
-                           type="number"
-                           name="offer"
-                           id="offer"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                           placeholder="12"
-                           required
-                        />
-                     </div> */}
 
                      <div class="w-full">
                         <label

@@ -91,7 +91,9 @@ const getUserListing = asyncHandler(async (req, res) => {
    if (!listing) {
       throw new ApiError(404, "Listing not found");
    }
-   res.status(200).json(new ApiResponse(true, "Listing Found", listing));
+   res.status(200).json(
+      new ApiResponse(true, "Listing Fetched Successfully", listing)
+   );
 });
 
 const updateListing = asyncHandler(async (req, res) => {
