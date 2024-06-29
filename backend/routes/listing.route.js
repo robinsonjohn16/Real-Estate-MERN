@@ -6,6 +6,7 @@ import {
    deleteUserListing,
    getUserListing,
    updateListing,
+   showIndividualListing,
 } from "../controllers/listing.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 
@@ -23,4 +24,6 @@ router.route("/get/:id").get(verifyJWT, getUserListing);
 router
    .route("/update/:id")
    .post(verifyJWT, upload.fields([{ name: "images" }]), updateListing);
+
+router.route("/listing/:id").get(verifyJWT, showIndividualListing);
 export default router;

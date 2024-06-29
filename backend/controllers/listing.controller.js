@@ -114,10 +114,25 @@ const updateListing = asyncHandler(async (req, res) => {
       .status(200)
       .json(new ApiResponse(true, "Listing updated", listing));
 });
+
+const showIndividualListing = asyncHandler(async (req, res) => {
+   console.log(req.params.id);
+   if (!req.params.id) throw new ApiError(402, "No id provided");
+   const listing = await Listing.findById(req.params.id);
+   if (!listing) {
+      throw new ApiError(404, "Listing not found");
+   }
+   res.status(200).json(
+      new ApiResponse(true, "Listing Fetched Successfully", listing)
+   );
+});
+
+co;
 export {
    createListing,
    showUserListing,
    deleteUserListing,
    getUserListing,
    updateListing,
+   showIndividualListing,
 };

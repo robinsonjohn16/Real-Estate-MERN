@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 import {
    updateUserStart,
    updateUserSuccess,
@@ -11,6 +11,7 @@ import {
 } from "../redux/user/userSlice";
 
 function Profile() {
+   const navigate = useNavigate();
    const dispatch = useDispatch();
    const userState = useSelector((state) => state.user.currentUser);
    const fileRef = useRef(null);
@@ -47,6 +48,9 @@ function Profile() {
       }
    };
 
+   const showIndividualListing = (id) => {
+      navigate(`/listing/${id}`);
+   };
    const handleImageChange = async () => {
       // console.log(avatar);
       formDataImage.append("avatar", avatar);
@@ -252,7 +256,10 @@ function Profile() {
                      class="divide-y divide-gray-200 dark:divide-gray-700"
                   >
                      {userListings.map((listing) => (
-                        <li class="py-3 sm:py-4">
+                        <li
+                           onClick={() => showIndividualListing(listing._id)}
+                           class="py-3 sm:py-4"
+                        >
                            <div class="flex items-center">
                               <div class="flex-shrink-0">
                                  <img

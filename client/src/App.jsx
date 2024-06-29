@@ -11,6 +11,7 @@ import About from "./Pages/About";
 import CreateListing from "./Pages/CreateListing";
 import UpdateListing from "./Pages/UpdateListing";
 import Testing from "./Pages/Testing";
+import ShowIndividualListing from "./Pages/ShowIndividualListing";
 
 function App() {
    return (
@@ -27,6 +28,7 @@ function App() {
                <Route path="/profile" element={<Profile />} />
                <Route path="/createListing" element={<CreateListing />} />
                <Route path="/updateListing/:id" element={<UpdateListing />} />
+               <Route path="/listing/:id" element={<ShowIndividualListing />} />
             </Route>
          </Routes>
       </BrowserRouter>

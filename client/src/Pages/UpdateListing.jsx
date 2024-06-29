@@ -59,7 +59,7 @@ function UpdateListing() {
    );
 
    const handleSubmit = async (e) => {
-      e.preventDefault(); // Prevent default form submission
+      e.preventDefault();
       try {
          setLoading(true);
          const Imagedata = new FormData();
@@ -70,13 +70,18 @@ function UpdateListing() {
             Imagedata.append("images", file);
          }
 
+         const listingId = params.id;
          await axios
-            .post("http://localhost:4000/api/v1/listing/create", Imagedata, {
-               withCredentials: true,
-               headers: {
-                  "Content-Type": "multipart/form-data",
-               },
-            })
+            .post(
+               `http://localhost:4000/api/v1/listing/update/${listingId}`,
+               Imagedata,
+               {
+                  withCredentials: true,
+                  headers: {
+                     "Content-Type": "multipart/form-data",
+                  },
+               }
+            )
             .then((res) => {
                console.log(res.data);
             })
@@ -183,9 +188,19 @@ function UpdateListing() {
                            }
                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         >
-                           <option selected="">Select category</option>
-                           <option value="sell">Sell</option>
-                           <option value="rent">Rent</option>
+                           <option>Select category</option>
+                           <option
+                              selected={formData.type === "sell"}
+                              value="sell"
+                           >
+                              Sell
+                           </option>
+                           <option
+                              selected={formData.type === "rent"}
+                              value="rent"
+                           >
+                              Rent
+                           </option>
                         </select>
                      </div>
                      <div className="flex justify-between mt-5">
@@ -386,7 +401,7 @@ function UpdateListing() {
                      onClick={handleSubmit}
                      class="inline-flex bg-blue-600 items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
                   >
-                     {loading ? "Loading..." : "Create"}
+                     {loading ? "Loading..." : "Update"}
                   </button>
                </form>
             </div>
